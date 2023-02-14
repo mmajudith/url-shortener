@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useURLShortener } from '@/hooks/useURLShortener';
 
 const ShortenForm = () => {
-	// const [copyLink, setCopyLink] = useState('Copy');
 	const [link, setLink] = useState('');
 	const [completeLink, setCompleteLink] = useState('');
 	const [links, setLinks] = useState([]);
@@ -12,14 +11,15 @@ const ShortenForm = () => {
 		errorStyle: false,
 	});
 
-	const { data, error } = useURLShortener(completeLink);
+	// const { data, error } = useURLShortener(completeLink);
 
-	const copyHandler = (text) => {
+	const copyHandler = (e, text) => {
 		if (!navigator.clipboard) {
 			return alert('Sorry, navigator clipboard not supported by browser.');
 		}
 		navigator.clipboard.writeText(text);
-		// setCopyLink('Copied!');
+		e.target.innerHTML = 'Copied!';
+		e.target.style.backgroundColor = 'hsl(257, 27%, 26%)';
 	};
 
 	const submitLinkHandler = (e) => {
@@ -34,35 +34,35 @@ const ShortenForm = () => {
 
 		setCompleteLink(link);
 
-		if (error) {
-			return setErrorMessage({
-				errorMes: 'Please add a valid link or check your internet',
-				errorStyle: true,
-			});
-		}
+		// if (error) {
+		// 	return setErrorMessage({
+		// 		errorMes: 'Please add a valid link or check your internet',
+		// 		errorStyle: true,
+		// 	});
+		// }
 		setErrorMessage({ errorMes: '', errorStyle: false });
 		setLink('');
 		console.log(data);
-		setLinks((prev) => [
-			...prev,
-			{
-				original_link: data?.result.original_link,
-				short_link: data?.result.full_short_link2,
-			},
-		]);
+		// setLinks((prev) => [
+		// 	...prev,
+		// 	{
+		// 		original_link: data?.result.original_link,
+		// 		short_link: data?.result.full_short_link2,
+		// 	},
+		// ]);
 	};
 
 	return (
-		<div className="max-w-[1440px] h-fit m-auto relative">
+		<div className="max-w-[1440px] h-fit m-auto ">
 			<form
 				onSubmit={submitLinkHandler}
-				className="w-10/12 h-auto m-auto py-12 absolute inset-x-0 top-[-88%] rounded-lg bg-[url('/images/bg-shorten-desktop.svg')] bg-dark-violet bg-no-repeat bg-cover"
+				className="w-11/12 lg:w-10/12 h-auto m-auto px-6 sm:px-0 py-6 sm:py-12 relative top-[-78.5px] sm:top-[-62.5px] rounded-lg bg-[url('/images/bg-shorten-mobile.svg')] sm:bg-[url('/images/bg-shorten-desktop.svg')] bg-dark-violet bg-no-repeat bg-cover"
 			>
-				<div className="w-10/12 mx-auto flex flex-row justify-between items-center">
+				<div className="w-full sm:w-10/12 mx-auto flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-5">
 					<input
 						type="text"
 						placeholder="Shorten a link here..."
-						className={`w-[77%] py-[10px] pl-5 rounded ${
+						className={`w-full sm:w-[77%] py-[10px] pl-5 rounded ${
 							errorMessage.errorStyle
 								? `border-2 border-red border-solid placeholder-red`
 								: `border-none outline-none placeholder-gray`
@@ -70,7 +70,7 @@ const ShortenForm = () => {
 						value={link}
 						onChange={(e) => setLink(e.target.value)}
 					/>
-					<div className="w-1/5 hover:bg-white rounded">
+					<div className="w-full sm:w-1/5 hover:bg-white rounded">
 						<button
 							type="submit"
 							className="w-full border-none outline-none bg-cyan text-white rounded py-[10px] text-base font-medium hover:opacity-60"
@@ -83,8 +83,8 @@ const ShortenForm = () => {
 					{errorMessage.errorMes}
 				</span>
 			</form>
-			<div className="w-10/12 h-auto m-auto pt-20 text-base">
-				{links.length > 0 &&
+			<div className="w-11/12 lg:w-10/12 h-auto mx-auto mt-[-50px] text-base">
+				{/* {links.length > 0 &&
 					links.map((link, index) => (
 						<div
 							key={index}
@@ -94,18 +94,14 @@ const ShortenForm = () => {
 							<div className="flex flex-row justify-between items-center gap-5">
 								<p className="text-cyan text-right">{link.short_link}</p>
 								<p
-									className={`${
-										copyLink === 'Copied!'
-											? `bg-very-dark-blue`
-											: `bg-cyan hover:bg-opacity-60`
-									} cursor-pointer  text-white rounded-md px-8 py-2 text-sm`}
-									onClick={() => copyHandler(link.short_link)}
+									className={`bg-cyan hover:bg-opacity-60 cursor-pointer text-white rounded-md px-6 py-2 text-sm`}
+									onClick={(e) => copyHandler(e, link.short_link)}
 								>
-									{copyLink}
+									Copy
 								</p>
 							</div>
 						</div>
-					))}
+					))} */}
 			</div>
 		</div>
 	);

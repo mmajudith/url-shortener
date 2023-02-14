@@ -13,7 +13,7 @@ export default function Home() {
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<main className="w-full h-auto m-auto bg-[hsl(225,33%,95%)] relative">
+			<main className="w-full h-auto m-auto bg-[hsl(225,33%,95%)]">
 				<ShortenForm />
 				<AdvancedStatistics />
 				<BoostLinks />

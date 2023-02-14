@@ -21,8 +21,8 @@ const NavBar = () => {
 	}, [screenWidth]);
 
 	return (
-		<nav className="w-[95%] md:w-10/12 mx-auto mt-7 flex flex-col md:flex-row justify-between font-medium text-base">
-			<div className="w-full md:w-fit flex flex-col md:flex-row justify-between items-center">
+		<nav className="w-11/12 lg:w-10/12 mx-auto mt-7 flex flex-col md:flex-row justify-between font-medium text-base relative">
+			<div className="w-full md:w-fit flex flex-col md:flex-row justify-between items-center relative">
 				<div className="w-full md:w-fit mr-0 md:mr-10 flex flex-row justify-between items-center">
 					<Image src="/images/logo.svg" width={121} height={33} alt="logo" />
 					<img
@@ -36,8 +36,12 @@ const NavBar = () => {
 				</div>
 				<ul
 					className={`${
-						screenWidth > 767 ? `block` : toggleMenu ? `block` : `hidden`
-					} w-full md:w-fit flex flex-col md:flex-row justify-center items-center md:justify-between bg-dark-violet md:bg-white mt-7 md:mt-0 rounded-t-lg md:rounded-none`}
+						screenWidth > 767
+							? `block`
+							: toggleMenu
+							? `block absolute z-10 inset-x-0 top-[66px]`
+							: `hidden`
+					} w-full md:w-fit flex flex-col md:flex-row justify-center items-center md:justify-between bg-dark-violet md:bg-white md:mt-0 rounded-t-lg md:rounded-none`}
 				>
 					{[['Features'], ['Pricing'], ['Resources']].map(([list], index) => (
 						<li
@@ -51,7 +55,11 @@ const NavBar = () => {
 			</div>
 			<div
 				className={`${
-					screenWidth > 767 ? `block` : toggleMenu ? `block` : `hidden`
+					screenWidth > 767
+						? `block`
+						: toggleMenu
+						? `block absolute z-10 inset-x-0 top-[15.4rem]`
+						: `hidden`
 				} w-full md:w-fit pb-[18px] md:pb-0 flex flex-col md:flex-row justify-center items-center md:justify-between bg-dark-violet md:bg-white rounded-b-lg md:rounded-none`}
 			>
 				<button className="cursor-text w-[95%] md:w-fit py-[18px] md:py-0 text-white md:text-grayish-violet border-t border-grayish-violet border-solid md:border-none">
