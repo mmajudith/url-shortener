@@ -6,7 +6,7 @@ const Header = () => {
 	return (
 		<header className="max-w-[1440px] h-fit m-auto mb-24 overflow-x-hidden relative">
 			<NavBar />
-			<div className="w-11/12 lg:w-10/12 h-fit mx-auto mt-16 mb-7 flex flex-col-reverse md:flex-row justify-center md:justify-between items-center">
+			<div className="w-11/12 lg:w-10/12 h-fit mx-auto mt-10 md:mt-16 mb-7 flex flex-col-reverse md:flex-row justify-center md:justify-between items-center">
 				<div className="w-full md:w-[65%] lg:w-[50%] xl:w-[60%] text-center md:text-left">
 					<h1 className="w-full mb-3 font-bold text-very-dark-blue text-4xl xs:text-6xl md:text-5xl xl:text-[80px] leading-tight sm:leading-[4.5rem] md:leading-[4rem] xl:leading-[5.5rem]">
 						More than just shorter links

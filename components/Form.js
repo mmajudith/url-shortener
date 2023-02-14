@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useURLShortener } from '@/hooks/useURLShortener';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 
 const ShortenForm = () => {
 	const [link, setLink] = useState('');
@@ -11,7 +11,8 @@ const ShortenForm = () => {
 		errorStyle: false,
 	});
 
-	// const { data, error } = useURLShortener(completeLink);
+	const data = useLocalStorage(completeLink);
+	console.log(data, 'updata');
 
 	const copyHandler = (e, text) => {
 		if (!navigator.clipboard) {
@@ -34,7 +35,7 @@ const ShortenForm = () => {
 
 		setCompleteLink(link);
 
-		// if (error) {
+		// if (data.error) {
 		// 	return setErrorMessage({
 		// 		errorMes: 'Please add a valid link or check your internet',
 		// 		errorStyle: true,

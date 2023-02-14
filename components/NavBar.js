@@ -58,7 +58,7 @@ const NavBar = () => {
 					screenWidth > 767
 						? `block`
 						: toggleMenu
-						? `block absolute z-10 inset-x-0 top-[15.4rem]`
+						? `block absolute z-10 inset-x-0 top-[15rem]`
 						: `hidden`
 				} w-full md:w-fit pb-[18px] md:pb-0 flex flex-col md:flex-row justify-center items-center md:justify-between bg-dark-violet md:bg-white rounded-b-lg md:rounded-none`}
 			>
