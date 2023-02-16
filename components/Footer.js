@@ -55,7 +55,7 @@ const Footer = () => {
 							src="/images/icon-twitter.svg"
 							alt="twitter icon"
 							width={24}
-							height={20}
+							height={24}
 						/>
 						<Image
 							src="/images/icon-pinterest.svg"

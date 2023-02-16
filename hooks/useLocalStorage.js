@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 const baseURL = 'https://api.shrtco.de/v2/shorten?url=';
 
 export const useLocalStorage = (link) => {
-	const [data, setData] = useState({ links: {}, error: '' });
+	const [data, setData] = useState({ links: [], error: '' });
 	const url = `${baseURL}${link}`;
-	console.log(url, 'url');
 
+	//Run every time link changes
 	useEffect(() => {
 		const fetchLink = async () => {
 			if (link) {
@@ -15,9 +15,23 @@ export const useLocalStorage = (link) => {
 					const response = await axios.get(url);
 					const shortenLink = await response.data;
 
-					localStorage.setItem('shortenLink', JSON.stringify(shortenLink));
+					const { result } = shortenLink;
+					const { full_short_link2, original_link } = result;
+
+					let newLinks = {
+						original_link,
+						full_short_link2,
+					};
+					let links = JSON.parse(localStorage.getItem('links'));
+					if (links) {
+						links = [...links, newLinks];
+					} else {
+						links = [newLinks];
+					}
+
+					localStorage.setItem('links', JSON.stringify(links));
+					setData({ ...data, links });
 				} catch (err) {
-					console.log(err);
 					setData({ ...data, error: err });
 				}
 			}
@@ -26,20 +40,14 @@ export const useLocalStorage = (link) => {
 		fetchLink();
 	}, [link]);
 
+	//Run once to access the local storage data
 	useEffect(() => {
-		const shortenLinks = async () => {
-			if (link) {
-				try {
-					const links = await JSON.parse(localStorage.getItem('shortenLink'));
+		const links = JSON.parse(localStorage.getItem('links'));
 
-					setData({ ...data, links });
-				} catch (err) {
-					setData({ ...data, error: err });
-				}
-			}
-		};
-		shortenLinks();
-	}, [link]);
+		if (links) {
+			setData({ ...data, links });
+		}
+	}, []);
 
 	return data;
 };

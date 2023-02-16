@@ -33,7 +33,7 @@ const AdvancedStatistics = () => {
 					statistics dashboard.
 				</p>
 			</div>
-			<div className="w-11/12 lg:w-10/12 h-auto m-auto mt-16 flex flex-col md:flex-row justify-center md:justify-between gap-24 md:gap-5 lg:gap-8 relative z-10 after:w-2 md:after:w-full after:h-full md:after:h-[8px] after:bg-cyan after:absolute after:top-0 md:after:top-[9.5rem] after:left-[49.1%] sm:after:left-[49.4%] md:after:left-0 after:z-[-1]">
+			<div className="w-11/12 lg:w-10/12 h-auto m-auto mt-16 flex flex-col md:flex-row justify-center md:justify-between gap-24 md:gap-5 lg:gap-8 relative z-10 after:w-2 md:after:w-full after:h-full md:after:h-[8px] after:bg-cyan after:absolute after:top-0 md:after:top-[9.5rem] after:left-[49%] sm:after:left-[49.4%] md:after:left-0 after:z-[-1]">
 				{statistics.map((statistic, index) => (
 					<div
 						key={index}
