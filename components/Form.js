@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 
 const ShortenForm = () => {
@@ -10,9 +9,10 @@ const ShortenForm = () => {
 		errorStyle: false,
 	});
 
-	const data = useLocalStorage(completeLink);
+	const [data, setData] = useLocalStorage(completeLink);
 	const { links, error } = data;
 
+	//Copy shortened link function
 	const copyHandler = (e, text) => {
 		if (!navigator.clipboard) {
 			return alert('Sorry, navigator clipboard not supported by browser.');
@@ -22,6 +22,21 @@ const ShortenForm = () => {
 		e.target.style.backgroundColor = 'hsl(257, 27%, 26%)';
 	};
 
+	//Function for Deleting a link both original and shortened link
+	const deleteHandler = (index, originLink, shtenLink) => {
+		if (typeof window !== 'undefined') {
+			let links = JSON.parse(localStorage.getItem('links'));
+			const filteredLinks = links.filter((link, i) => i !== index);
+			links = filteredLinks;
+			localStorage.setItem('links', JSON.stringify(links));
+			alert(
+				`Original: ${originLink} and Shorten: ${shtenLink} successfully deleted!`
+			);
+			setData({ ...data, links });
+		}
+	};
+
+	//Submit function for shortening link
 	const submitLinkHandler = (e) => {
 		e.preventDefault();
 
@@ -82,13 +97,13 @@ const ShortenForm = () => {
 					? links.map((link, index) => (
 							<div
 								key={index}
-								className="w-full h-fit mx-auto my-3 md:px-5 py-4 flex flex-col md:flex-row justify-start md:justify-between md:items-center bg-white rounded"
+								className="w-full h-fit mx-auto my-3 md:px-5 py-4 flex flex-col md:flex-row justify-start md:justify-between md:items-center bg-white rounded md:gap-4"
 							>
-								<p className="w-full md:w-fit px-4 md:px-0 pb-4 md:pb-0 text-very-dark-violet border-b-2 border-[hsl(225,33%,95%)] border-solid md:border-none">
+								<p className="w-full md:w-fit px-4 md:px-0 pb-4 md:pb-0 text-very-dark-violet border-b-2 border-[hsl(225,33%,95%)] border-solid md:border-none break-all">
 									{link.original_link}
 								</p>
-								<div className="flex flex-col md:flex-row justify-start md:justify-between md:items-center px-4 md:px-0 md:gap-5">
-									<p className="py-4 md:py-0 text-cyan md:text-right">
+								<div className="flex flex-col md:flex-row justify-start md:justify-between md:items-center px-4 md:px-0 gap-4 md:gap-5">
+									<p className="pt-4 md:py-0 text-cyan md:text-right">
 										{link.full_short_link2}
 									</p>
 									<p
@@ -96,6 +111,18 @@ const ShortenForm = () => {
 										onClick={(e) => copyHandler(e, link.full_short_link2)}
 									>
 										Copy
+									</p>
+									<p
+										className={`bg-dark-violet hover:bg-opacity-60 cursor-pointer text-white rounded-md px-6 py-3 md:py-2 text-sm text-center`}
+										onClick={() =>
+											deleteHandler(
+												index,
+												link.original_link,
+												link.full_short_link2
+											)
+										}
+									>
+										Delete
 									</p>
 								</div>
 							</div>

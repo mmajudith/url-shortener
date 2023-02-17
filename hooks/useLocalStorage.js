@@ -49,5 +49,5 @@ export const useLocalStorage = (link) => {
 		}
 	}, []);
 
-	return data;
+	return [data, setData];
 };
