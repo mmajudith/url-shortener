@@ -23,15 +23,13 @@ const ShortenForm = () => {
 	};
 
 	//Function for Deleting a link both original and shortened link
-	const deleteHandler = (index, originLink, shtenLink) => {
+	const deleteHandler = (index) => {
 		if (typeof window !== 'undefined') {
 			let links = JSON.parse(localStorage.getItem('links'));
 			const filteredLinks = links.filter((link, i) => i !== index);
 			links = filteredLinks;
 			localStorage.setItem('links', JSON.stringify(links));
-			alert(
-				`Original: ${originLink} and Shorten: ${shtenLink} successfully deleted!`
-			);
+
 			setData({ ...data, links });
 		}
 	};
@@ -50,10 +48,12 @@ const ShortenForm = () => {
 		setCompleteLink(link);
 
 		if (error) {
-			return setErrorMessage({
+			setData({ ...data, error: '' });
+			setErrorMessage({
 				errorMes: 'Please add a valid link or check your internet',
 				errorStyle: true,
 			});
+			return;
 		}
 		setErrorMessage({ errorMes: '', errorStyle: false });
 		setLink('');
@@ -72,7 +72,7 @@ const ShortenForm = () => {
 							placeholder="Shorten a link here..."
 							className={`w-full py-[10px] pl-5 rounded ${
 								errorMessage.errorStyle
-									? `border-2 border-red border-solid placeholder-red`
+									? `border-2 border-red border-solid placeholder-red outline-none`
 									: `border-none outline-none placeholder-gray`
 							}`}
 							value={link}
@@ -100,7 +100,7 @@ const ShortenForm = () => {
 								className="w-full h-fit mx-auto my-3 md:px-5 py-4 flex flex-col md:flex-row justify-start md:justify-between md:items-center bg-white rounded md:gap-4"
 							>
 								<p className="w-full md:w-fit px-4 md:px-0 pb-4 md:pb-0 text-very-dark-violet border-b-2 border-[hsl(225,33%,95%)] border-solid md:border-none break-all">
-									{link.original_link}
+									{link.original_link.toLowerCase()}
 								</p>
 								<div className="flex flex-col md:flex-row justify-start md:justify-between md:items-center px-4 md:px-0 gap-4 md:gap-5">
 									<p className="pt-4 md:py-0 text-cyan md:text-right">
@@ -114,13 +114,7 @@ const ShortenForm = () => {
 									</p>
 									<p
 										className={`bg-dark-violet hover:bg-opacity-60 cursor-pointer text-white rounded-md px-6 py-3 md:py-2 text-sm text-center`}
-										onClick={() =>
-											deleteHandler(
-												index,
-												link.original_link,
-												link.full_short_link2
-											)
-										}
+										onClick={() => deleteHandler(index)}
 									>
 										Delete
 									</p>
